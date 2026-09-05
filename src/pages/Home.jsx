@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useEffect,useState } from "react";
+import RecipeCard from "../components/RecipeCard";
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,22 +52,7 @@ const Home = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
-            <div
-              key={recipe.idMeal}
-              className="bg-white rounded-2xl shadow-md overflow-hidden"
-            >
-              <img
-                src={recipe.strMealThumb}
-                alt={recipe.strMeal}
-                className="w-full h-56 object-cover"
-              />
-
-              <div className="p-5">
-                <h2 className="text-xl font-bold">{recipe.strMeal}</h2>
-
-                <p className="text-gray-500 mt-2">{recipe.strCategory}</p>
-              </div>
-            </div>
+           <RecipeCard key={recipe.idMeal} recipe={recipe}/>
           ))}
         </div>
       </div>
