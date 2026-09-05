@@ -6,25 +6,22 @@ const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    const savedFavorites =
-      JSON.parse(localStorage.getItem("favorites")) || [];
+    const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     setFavorites(savedFavorites);
   }, []);
 
   const removeFavorite = (id) => {
-    const updatedFavorites = favorites.filter(
-      (recipe) => recipe.idMeal !== id
-    );
+    const updatedFavorites = favorites.filter((recipe) => recipe.idMeal !== id);
 
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(updatedFavorites)
-    );
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
 
     setFavorites(updatedFavorites);
   };
-
+  const clearFavorites = () => {
+    localStorage.removeItem("favorites");
+    setFavorites([]);
+  };
   return (
     <>
       <Navbar />
@@ -33,7 +30,16 @@ const Favorites = () => {
         <h1 className="text-3xl font-bold text-center mb-8">
           My Favorite Recipes ❤️
         </h1>
-
+        {favorites.length > 0 && (
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={clearFavorites}
+              className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600"
+            >
+              🗑️ Clear All Favorites
+            </button>
+          </div>
+        )}
         {favorites.length === 0 ? (
           <p className="text-center text-gray-500 text-xl">
             No favorite recipes yet.

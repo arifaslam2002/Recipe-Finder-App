@@ -54,13 +54,17 @@ const RecipeDetails = () => {
   }, [id]);
 
   // Loading
-  if (loading) {
-    return (
-      <h2 className="text-center mt-10 text-2xl font-bold">
-        Loading... 🍳
-      </h2>
-    );
-  }
+if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center mt-20">
+      <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+
+      <p className="mt-4 text-xl font-semibold text-gray-600">
+        Loading recipe... 🍳
+      </p>
+    </div>
+  );
+}
 
   // Error
   if (error || !recipe) {
