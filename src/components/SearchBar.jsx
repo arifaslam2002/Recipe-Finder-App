@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 const SearchBar = ({ setRecipes }) => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!search.trim()) {
@@ -48,6 +49,21 @@ const SearchBar = ({ setRecipes }) => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://www.themealdb.com/api/json/v1/1/list.php?c=list",
+        );
+
+        setCategories(response.data.meals || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   return (
     <div>
       <form
@@ -67,13 +83,12 @@ const SearchBar = ({ setRecipes }) => {
           className="border border-gray-300 rounded-xl p-3 outline-none"
         >
           <option value="">All Categories</option>
-          <option value="Beef">Beef</option>
-          <option value="Chicken">Chicken</option>
-          <option value="Dessert">Dessert</option>
-          <option value="Pasta">Pasta</option>
-          <option value="Seafood">Seafood</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Breakfast">Breakfast</option>
+
+          {categories.map((item) => (
+            <option key={item.strCategory} value={item.strCategory}>
+              {item.strCategory}
+            </option>
+          ))}
         </select>
         <button
           type="submit"
