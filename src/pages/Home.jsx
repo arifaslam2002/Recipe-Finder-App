@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useEffect,useState } from "react";
 import RecipeCard from "../components/RecipeCard";
+import SearchBar from "../components/SearchBar";
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,7 @@ const Home = () => {
         <h1 className="text-3xl font-bold text-center mb-8">
           Discover Delicious Recipes 🍽️
         </h1>
-
+      <SearchBar setRecipes={setRecipes}/>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
            <RecipeCard key={recipe.idMeal} recipe={recipe}/>
