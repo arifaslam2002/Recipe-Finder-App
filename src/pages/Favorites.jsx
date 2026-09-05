@@ -12,6 +12,19 @@ const Favorites = () => {
     setFavorites(savedFavorites);
   }, []);
 
+  const removeFavorite = (id) => {
+    const updatedFavorites = favorites.filter(
+      (recipe) => recipe.idMeal !== id
+    );
+
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify(updatedFavorites)
+    );
+
+    setFavorites(updatedFavorites);
+  };
+
   return (
     <>
       <Navbar />
@@ -28,10 +41,16 @@ const Favorites = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {favorites.map((recipe) => (
-              <RecipeCard
-                key={recipe.idMeal}
-                recipe={recipe}
-              />
+              <div key={recipe.idMeal} className="relative">
+                <RecipeCard recipe={recipe} />
+
+                <button
+                  onClick={() => removeFavorite(recipe.idMeal)}
+                  className="absolute top-3 right-3 bg-red-500 text-white px-3 py-2 rounded-full hover:bg-red-600"
+                >
+                  🗑️
+                </button>
+              </div>
             ))}
           </div>
         )}
